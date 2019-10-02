@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>SPA - Single Page Application</title>
+<link rel="Stylesheet" href="style.css">
+</head>
+<body>
+<h1> Single Page Application </h1>
+<img src="spajpeg.jpg" alt="" width="800" height="250" />
+<h1> Co to jest SPA - Single Page App? </h1>
+<p> SPA (Single Page Application) to technologia, która pozwala wyświetlać poszczególne elementy strony, bez potrzeby ponownego załadowania całej strony.<br/> 
+Cały potrzebny do działania strony kod (HTML, CSS, JavaScript) przesyłany jest na początku lub dodawany dynamicznie w kawałkach,<br/> zwykle w odpowiedzi na interakcje generowane przez użytkownika. </p>
+
+<h2> Jak działa Single Page App?</h2>
+<p> Wszystkie zasoby są ściągane podczas pierwszej wizyty na stronie lub są dynamicznie pobierane w tle podczas korzystania z aplikacji wtedy kiedy to konieczne. </p>
+
+<h2>Przykłady Single Page Apps</h2>
+<ul>
+<li>
+Gmail to podręcznikowy przykład aplikacji SPA. Tworzenie nowej wiadomości otwiera okienko a nie całą nową stronę, która służy do edycji e-maila.</li>
+<li>
+Google Maps – podczas korzystania aplikacja pobiera tylko te dane, które są jej w danej chwili potrzebne. Aplikacja pobiera szczegóły lokalizacji w miarę eksplorowania mapy i dynamicznie zmienia adres URL w pasku przeglądarki. Nie dochodzi przy tym do przeładowywania aplikacji.</li>
+<li>
+Google Music, Spotify, Tidal – często wykonujemy we nich zmiany widoków przeglądając strony z albumami, artystami i playlistami są to aplikacje typu Single Page Application. Jest to konieczne aby odtwarzacz mógł ciągle odtwarzać muzykę. Gdyby dochodziło do przełączania podstron w synchroniczny sposób, odtwarzacz i jego stan byłby nieustannie resetowany i bylibyśmy zmuszeni co chwila klikać „play” od nowa lub odtwarzanie byłoby przerywane.</li>
+<li>
+Facebook – mimo, że jest to ogromna aplikacja internetowa, jej architektura polega na podejściu Single Page App. To dlatego aplikacja przeglądarkowa może się zacinać na starszych komputerach. Niemal cała logika sterowania dzieje się po stronie przeglądarki.</li></ul>
+
+<h2>Zalety SPA </h2>
+<ul><li>Strona działa dużo szybciej </li>
+<li>Serwer jest mniej obciążony </li>
+<li>Podobny koszt do tworzenia konwencjonalnej strony</li>
+<li>Mniejsze ilości przesyłanych danych</li> </ul>
+<h2>Wady SPA</h2>
+<ul><li>Niekompatybilne ze starszymi przeglądarkami</li>
+<li>Trudniej dokonać analityki użytkowników</li>
+</ul>
+<h2>Rozwiązania, umożliwiające tworzenie SPA</h2>
+<ul><li>
+AJAX </li>
+<li>
+Vanilla JS</li>
+<li>
+jQuery</li>
+<li>AngularJS</li>
+<li>I inne... </li></ul>
+
+<h1> Programowanie Single Page App</h1>
+<a href="przykladspa.html">Link do strony</a>
+<p> Kod HTML aplikacji SPA niczym się nie różni od standardowej strony.<br/> W przykładzie poniżej zamieszczone są kluczowe elementy, menu i okienko z właściwą zawartością. Na końcu dodana została biblioteka jQuery: </p>
+<pre class="wp-block-preformatted">&lt;html&gt;<br> &lt;head&gt;<br>     &lt;title&gt;SPA - Super Prosta Aplikacja&lt;/title&gt;<br> &lt;/head&gt;<br> &lt;body&gt;<br>     &lt;nav&gt;<br>         &lt;ul&gt;<br>             &lt;li&gt;&lt;a href="o-nas.html"&gt;O nas&lt;/a&gt;&lt;/li&gt;<br>             &lt;li&gt;&lt;a href="o-nas.html"&gt;Oferta&lt;/a&gt;&lt;/li&gt;<br>             &lt;li&gt;&lt;a href="o-nas.html"&gt;Kontakt&lt;/a&gt;&lt;/li&gt;<br>         &lt;/ul&gt;<br>     &lt;/nav&gt;<br>     &lt;main id="spa-container"&gt;<br>         Treść podstrony home.<br>     &lt;/main&gt;<br> &lt;/body&gt;<br> &lt;script <br>   src="https://code.jquery.com/jquery-3.4.1.min.js"<br>   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="<br>   crossorigin="anonymous"&gt;<br>  &lt;/script&gt;<br>  &lt;script&gt;<br>     /* Tutaj wstawiamy dalszy kod */<br>  &lt;/script&gt;<br> &lt;/html&gt;<br></pre>
+
+<h2>Blokada linków, czyli opuszczenia podstrony</h2>
+<p>Aby nasza strona była zgodna z podejściem Single Page Application trzeba sprawić, aby linki nie powodowały opuszczenia podstrony. Zablokujmy domyślne zachowanie linków za pomocą preventDefault();</p>
+<pre class="wp-block-preformatted">&lt;script&gt;<br>   var mainMenuLink = $('nav ul li a');<br>   mainMenuLink.click(function(e){<br>      e.preventDefault();<br>   });<br>&lt;/script&gt;</pre>
+
+<h2>Asynchroniczne ładowanie treści z innych podstron</h2>
+<p>W zdarzeniu &#8222;click&#8221; załadować trzeba to co się znajduje na podstronie, którą wskazuje atrybut href klikanego linku. <br/> Potrzebna tu jest metoda load a następnie selektor zawierający zasadniczą treść strony.</p>
+
+<pre class="wp-block-preformatted">let link = $(this).attr('href');<br>spaContainer.load(link + ' #spa-container');<br></pre>
+
+<h2>Dynamiczna zmiana adresu URL</h2>
+
+<p>Nie zmienia się adres w pasku adresu przeglądarki. To bardzo ważna funkcja pod kątem User Experience i usability. Jeżeli zmienia się adres, pozostaje historia przeglądania i możemy się nim z kimś podzielić. Aby się zmieniał należy dodać jeszcze jedną instrukcję:</p>
+
+<pre class="wp-block-preformatted">history.pushState({<br>   id: label<br>}<br>, 'SPA - ' + label, link);</pre>
+
+<h2>Obsługa przycisków wstecz dalej</h2>
+<p>Działa przełączanie podstron, działa zmiana adresów w pasku przeglądarki, lecz nie działają przyciski wstecz i dalej,<br/>
+ których obsługa jest priorytetem kiedy zależy na wygodzie użytkowników - tym bardziej mobilnych.</p>
+
+<pre class="wp-block-preformatted">window.addEventListener('popstate', function(event) {<br>   let link = window.location.pathname;<br>   spaContainer.load(link + ' #spa-container');<br>}, false);<br></pre>
+
+<h3>Aspekty wyróżniające SPA przy standardowej stronie wraz z porównaniem w postaci filmów:</h3>
+<ul><li> Składa się z pojedynczej strony web (HTML+JavaScript+CSS) </li> 
+<li>Dane ładowane dynamicznie - na żądanie </li>  
+<li>Nie wymaga przeładowania strony </li> 
+<li>Nie przekierowuje użytkownika na inne strony </li></ul>
+<p> Strona Standardowa: <a href="https://youtu.be/g58OSzuZc-k">LINK</a> <br/>
+SPA: <a href="https://youtu.be/7yikUg1quZQ">LINK</a>
+</p>
+
+
+
+
+</body>
+</html>
