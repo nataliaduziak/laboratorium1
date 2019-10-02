@@ -1,1 +1,1 @@
-# laboratorium1
+#  pierwsze laboratorium
